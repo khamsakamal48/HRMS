@@ -29,30 +29,30 @@ with open('Holiday_List.csv', 'r') as file:
             # Sleep for the random number before logging into HRMS
             time.sleep(random)
 
-            # # Retrieve contents from .env file
+            # Retrieve contents from .env file
             URL = os.getenv("URL")
             LOGIN = os.getenv("LOGIN")
             PASSWORD = os.getenv("PASSWORD")
 
             driver = webdriver.Chrome(ChromeDriverManager().install())
 
-            # # Open HRMS Page
+            # Open HRMS Page
             driver.get(URL)
 
-            # # Wait
+            # Wait
             driver.implicitly_wait(10)
 
-            # # Enter Username
+            # Enter Username
             driver.find_element_by_id("txtUserName").send_keys(LOGIN)
 
-            # # Enter password
+            # Enter password
             driver.find_element_by_id ("txtPassword").send_keys(PASSWORD)
 
-            # # Click on the Login Button
+            # Click on the Login Button
             driver.find_element_by_id("btnLogin").click()
 
             # # Click on the Check-in/Check-out button
-            #driver.find_element_by_id("btnCheckin").click()
+            driver.find_element_by_id("btnCheckin").click()
 
             driver.quit()
             break
