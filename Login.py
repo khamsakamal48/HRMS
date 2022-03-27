@@ -1,26 +1,58 @@
-import selenium
+import os, time, datetime
 
+# Set current directory
+#os.chdir(os.path.dirname(sys.argv[0]))
+os.chdir(os.getcwd())
+
+from dotenv import load_dotenv
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
+from random import *
+from datetime import datetime
 
-driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()))
+load_dotenv()
 
+# Textual month, day and year
+todays_date = datetime.now().strftime("%d %B %Y")
+todays_day = datetime.now().strftime("%A")
+              
+with open('Holiday_List.csv', 'r') as file:
+    for holiday_list in file.readlines():
+        # if todays_date in holiday_list or todays_day == "Sunday" or todays_day == "Saturday":
+        if todays_date in holiday_list or todays_day == "Saturday":
+            print ("It's a holiday today")
+            break
+        else:
+            # Pick a random number between 1 to 3600 seconds (within an hour)
+            random = randint(1, 60)
 
-driver = webdriver.Chrome()
+            # Sleep for the random number before logging into HRMS
+            time.sleep(random)
 
-driver.get("https://www.google.com")
+            # # Retrieve contents from .env file
+            URL = os.getenv("URL")
+            LOGIN = os.getenv("LOGIN")
+            PASSWORD = os.getenv("PASSWORD")
 
-driver.title # => "Google"
+            driver = webdriver.Chrome(ChromeDriverManager().install())
 
-driver.implicitly_wait(0.5)
+            # # Open HRMS Page
+            driver.get(URL)
 
-search_box = driver.find_element(By.NAME, "q")
-search_button = driver.find_element(By.NAME, "btnK")
+            # # Wait
+            driver.implicitly_wait(10)
 
-search_box.send_keys("Selenium")
-search_button.click()
+            # # Enter Username
+            driver.find_element_by_id("txtUserName").send_keys(LOGIN)
 
-driver.find_element(By.NAME, "q").get_attribute("value") # => "Selenium"
+            # # Enter password
+            driver.find_element_by_id ("txtPassword").send_keys(PASSWORD)
 
-driver.quit()
+            # # Click on the Login Button
+            driver.find_element_by_id("btnLogin").click()
+
+            # # Click on the Check-in/Check-out button
+            #driver.find_element_by_id("btnCheckin").click()
+
+            driver.quit()
+            break
