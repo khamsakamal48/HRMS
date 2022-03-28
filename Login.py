@@ -18,8 +18,7 @@ todays_day = datetime.now().strftime("%A")
               
 with open('Holiday_List.csv', 'r') as file:
     for holiday_list in file.readlines():
-        # if todays_date in holiday_list or todays_day == "Sunday" or todays_day == "Saturday":
-        if todays_date in holiday_list or todays_day == "Saturday":
+        if todays_date in holiday_list or todays_day == "Sunday" or todays_day == "Saturday":
             print ("It's a holiday today")
             break
         else:
@@ -40,7 +39,7 @@ with open('Holiday_List.csv', 'r') as file:
             driver.get(URL)
 
             # Wait
-            driver.implicitly_wait(10)
+            driver.implicitly_wait(15)
 
             # Enter Username
             driver.find_element_by_id("txtUserName").send_keys(LOGIN)
@@ -51,12 +50,12 @@ with open('Holiday_List.csv', 'r') as file:
             # Click on the Login Button
             driver.find_element_by_id("btnLogin").click()
             
-            time.sleep(120)
+            time.sleep(15)
 
             # # Click on the Check-in/Check-out button
             driver.find_element_by_id("btnCheckin").click()
             
-            time.sleep(10)
+            time.sleep(15)
 
             driver.quit()
             break
