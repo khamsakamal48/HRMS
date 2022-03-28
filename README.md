@@ -50,7 +50,7 @@ Go to the project directory
   cd your_server_path/HRMS
 ```
 
-Start the script
+Manually start the script
 
 ```bash
   python3 Login.py
@@ -66,3 +66,9 @@ Set a scheduler via cron
   # Run at 5:30 AM
   30 17 * * * cd your_server_path/HRMS/ && DISPLAY=:0 gnome-terminal -- /bin/sh -c "python3 Login.py"
 ```
+## Notes
+
+Since, HRMS is hosted on the internet - If the internet at the campus goes down then this won't work for obvious reasons. Under such circumstances, you need to log into HRMS using your phone and check-in or out.
+
+## Disclaimer
+I am just providing you a script so that you don't have to worry about this silly attendance routine and focus on our work. With that said, I hold no responsibility for the misuse of this tool.
