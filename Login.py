@@ -23,7 +23,7 @@ with open('Holiday_List.csv', 'r') as file:
             break
         else:
             # Pick a random number between 1 to 3600 seconds (within an hour)
-            random = randint(1, 2)
+            random = randint(1, 3600)
 
             # Sleep for the random number before logging into HRMS
             time.sleep(random)
