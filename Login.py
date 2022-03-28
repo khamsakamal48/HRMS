@@ -24,7 +24,7 @@ with open('Holiday_List.csv', 'r') as file:
             break
         else:
             # Pick a random number between 1 to 3600 seconds (within an hour)
-            random = randint(1, 60)
+            random = randint(1, 2)
 
             # Sleep for the random number before logging into HRMS
             time.sleep(random)
@@ -50,9 +50,13 @@ with open('Holiday_List.csv', 'r') as file:
 
             # Click on the Login Button
             driver.find_element_by_id("btnLogin").click()
+            
+            time.sleep(120)
 
             # # Click on the Check-in/Check-out button
             driver.find_element_by_id("btnCheckin").click()
+            
+            time.sleep(10)
 
             driver.quit()
             break
