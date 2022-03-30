@@ -1,4 +1,4 @@
-import os, time, datetime, sys, jinja2, ssl, smtplib, imaplib
+import os, time, datetime, sys, ssl, smtplib, imaplib
 
 # Set current directory
 #os.chdir(os.path.dirname(sys.argv[0]))
