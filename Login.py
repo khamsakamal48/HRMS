@@ -418,7 +418,7 @@ with open('Holiday_List.csv', 'r') as holiday_list:
             random = randint(1, 3600)
 
             # Sleep for the random number before logging into HRMS
-            time.sleep(random)
+            #time.sleep(random)
 
             # Retrieve contents from .env file
             URL = os.getenv("URL")
@@ -429,9 +429,8 @@ with open('Holiday_List.csv', 'r') as holiday_list:
             options = webdriver.ChromeOptions()
             options.headless = True
             options.add_argument("--log-level=3")
-            s=Service(ChromeDriverManager().install())
+            s=Service(executable_path=ChromeDriverManager().install())
             driver = webdriver.Chrome(service=s,options=options)
-            driver.maximize_window()
 
             # Open HRMS Page
             driver.get(URL)
@@ -456,13 +455,17 @@ with open('Holiday_List.csv', 'r') as holiday_list:
             time.sleep(15)
 
             driver.quit()
-            sys.exit()
+    #except Exception as e:
     except:
         subject = "HRMS Auto Check-in/out | Status: FAILURE"
+        print (subject)
+        # Print the exception
+        #print (e)
         send_email()
         sys.exit()
     else:
         # Send email on success
-            subject = "HRMS Auto Check-in/out | Status: SUCCESS"
-            send_email()
-            sys.exit()
+        subject = "HRMS Auto Check-in/out | Status: SUCCESS"
+        print (subject)
+        send_email()
+        sys.exit()
