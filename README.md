@@ -34,12 +34,18 @@ Clone the project
   git clone https://github.com/khamsakamal48/HRMS.git
 ```
 
-Add the HRMS URL, Username & Password for HRMS in the .env file
+Add the HRMS URL, Username & Password for HRMS, Email server URL, port and credentials in the .env file
 
 ```bash
   URL=
   LOGIN=
   PASSWORD=
+  SMTP_SERVER=
+  SMTP_PORT=
+  IMAP_PORT=
+  SMTP_LOGIN=
+  SMTP_PASSWORD=
+  EMAIL_TO=
 ```
 Make sure your Leaves and Holiday list in updated in the Holiday_list.csv file
 ## Run Locally
