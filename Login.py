@@ -6,14 +6,17 @@ os.chdir(os.getcwd())
 
 from dotenv import load_dotenv
 from selenium import webdriver
-#from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 from random import *
 from datetime import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+
+# Disable Webdriver messages
+os.environ['WDM_LOG_LEVEL'] = '0'
 
 load_dotenv()
 
@@ -28,10 +31,11 @@ def send_email():
     SMTP_PASSWORD = os.getenv("SMTP_PASSWORD")
     EMAIL_TO =  os.getenv("EMAIL_TO")
     IMAP_PORT =  os.getenv("IMAP_PORT")
+    FROM_NAME =  os.getenv("FROM_NAME")
     
     message = MIMEMultipart("alternative")
     message["Subject"] = subject
-    message["From"] = SMTP_LOGIN
+    message["From"] = FROM_NAME
     message["To"] = EMAIL_TO
     
     TEMPLATE = """<!DOCTYPE html>
@@ -414,7 +418,7 @@ with open('Holiday_List.csv', 'r') as holiday_list:
             random = randint(1, 3600)
 
             # Sleep for the random number before logging into HRMS
-            #time.sleep(random)
+            time.sleep(random)
 
             # Retrieve contents from .env file
             URL = os.getenv("URL")
@@ -422,8 +426,11 @@ with open('Holiday_List.csv', 'r') as holiday_list:
             PASSWORD = os.getenv("PASSWORD")
 
             #driver = webdriver.Chrome(ChromeDriverManager().install())
+            options = webdriver.ChromeOptions()
+            options.headless = True
+            options.add_argument("--log-level=3")
             s=Service(ChromeDriverManager().install())
-            driver = webdriver.Chrome(service=s)
+            driver = webdriver.Chrome(service=s,options=options)
             driver.maximize_window()
 
             # Open HRMS Page
@@ -433,33 +440,29 @@ with open('Holiday_List.csv', 'r') as holiday_list:
             driver.implicitly_wait(15)
 
             # Enter Username
-            #driver.find_element_by_id("txtUserName").send_keys(LOGIN)
             driver.find_element(By.ID, 'txtUserName').send_keys(LOGIN)
 
             # Enter password
-            #driver.find_element_by_id ("txtPassword").send_keys(PASSWORD)
             driver.find_element(By.ID, 'txtPassword').send_keys(PASSWORD)
 
             # Click on the Login Button
-            #driver.find_element_by_id("btnLogin").click()
             driver.find_element(By.ID, 'btnLogin').click()
             
             time.sleep(15)
 
             # # Click on the Check-in/Check-out button
-            #driver.find_element_by_id("btnCheckin").click()
-            #driver.find_element(By.ID, 'btnCheckin').click()
+            driver.find_element(By.ID, 'btnCheckin').click()
             
             time.sleep(15)
 
             driver.quit()
-            
-            # Send email on success
-            subject = "HRMS Auto Check-in/out | Status: SUCCESS"
-            send_email()
-            
             sys.exit()
     except:
         subject = "HRMS Auto Check-in/out | Status: FAILURE"
         send_email()
         sys.exit()
+    else:
+        # Send email on success
+            subject = "HRMS Auto Check-in/out | Status: SUCCESS"
+            send_email()
+            sys.exit()
