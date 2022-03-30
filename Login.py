@@ -425,7 +425,7 @@ with open('Holiday_List.csv', 'r') as holiday_list:
             LOGIN = os.getenv("LOGIN")
             PASSWORD = os.getenv("PASSWORD")
 
-            #driver = webdriver.Chrome(ChromeDriverManager().install())
+            # Load webdriver with options
             options = webdriver.ChromeOptions()
             options.headless = True
             options.add_argument("--log-level=3")
@@ -455,17 +455,17 @@ with open('Holiday_List.csv', 'r') as holiday_list:
             time.sleep(15)
 
             driver.quit()
+            
     #except Exception as e:
     except:
         subject = "HRMS Auto Check-in/out | Status: FAILURE"
-        print (subject)
         # Print the exception
         #print (e)
         send_email()
         sys.exit()
+        
     else:
         # Send email on success
         subject = "HRMS Auto Check-in/out | Status: SUCCESS"
-        print (subject)
         send_email()
         sys.exit()
