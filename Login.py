@@ -400,7 +400,7 @@ def send_email():
     with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, context=context) as server:
         server.login(SMTP_LOGIN, SMTP_PASSWORD)
         server.sendmail(
-            SMTP_LOGIN, SMTP_LOGIN, emailcontent
+            SMTP_LOGIN, EMAIL_TO, emailcontent
         )
 
     # Save copy of the sent email to sent items folder
@@ -418,7 +418,7 @@ with open('Holiday_List.csv', 'r') as holiday_list:
             random = randint(1, 3600)
 
             # Sleep for the random number before logging into HRMS
-            #time.sleep(random)
+            time.sleep(random)
 
             # Retrieve contents from .env file
             URL = os.getenv("URL")
