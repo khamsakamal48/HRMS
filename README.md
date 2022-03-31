@@ -67,10 +67,10 @@ Set a scheduler via cron
   crontab -e
 
   # Run at 9:30 AM
-  30 9 * * * /bin/python3 your_server_path/HRMS/Login.py
+  30 9 * * * cd your_server_path/HRMS/ && DISPLAY=:0 gnome-terminal -- /bin/sh -c "python3 Login.py"
 
-  # Run at 5:30 PM
-  30 17 * * * /bin/python3 your_server_path/HRMS/Login.py
+  # Run at 5:30 AM
+  30 17 * * * cd your_server_path/HRMS/ && DISPLAY=:0 gnome-terminal -- /bin/sh -c "python3 Login.py"
 
   ## Change gnome-terminal to whatever terminal you use on your system like XTerm, PuTTY, etc.
 ```
