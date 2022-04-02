@@ -408,11 +408,13 @@ def send_email():
         imap.login(SMTP_LOGIN, SMTP_PASSWORD)
         imap.append('Sent', '\\Seen', imaplib.Time2Internaldate(time.time()), emailcontent.encode('utf8'))
         imap.logout()
-              
+
+holiday = "FALSE"              
 with open('Holiday_List.csv', 'r') as holiday_list:
     try:
         if todays_date in holiday_list.read() or todays_day == "Sunday" or todays_day == "Saturday":
             print ("It's a holiday today")
+            holiday = "TRUE"
         else:
             # Pick a random number between 1 to 3600 seconds (within an hour)
             random = randint(1, 3600)
@@ -465,7 +467,8 @@ with open('Holiday_List.csv', 'r') as holiday_list:
         sys.exit()
         
     else:
-        # Send email on success
-        subject = "HRMS Auto Check-in/out | Status: SUCCESS"
-        send_email()
-        sys.exit()
+        if holiday != "TRUE":  
+            # Send email on success on a working day
+            subject = "HRMS Auto Check-in/out | Status: SUCCESS"
+            send_email()
+            sys.exit()
