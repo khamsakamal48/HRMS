@@ -9,11 +9,12 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
 from random import *
 from datetime import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from selenium.webdriver.edge.service import Service as EdgeService
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
 # Disable Webdriver messages
 os.environ['WDM_LOG_LEVEL'] = '0'
@@ -420,7 +421,7 @@ with open('Holiday_List.csv', 'r') as holiday_list:
             random = randint(1, 3600)
 
             # Sleep for the random number before logging into HRMS
-            time.sleep(random)
+            # time.sleep(random)
 
             # Retrieve contents from .env file
             URL = os.getenv("URL")
@@ -428,11 +429,17 @@ with open('Holiday_List.csv', 'r') as holiday_list:
             PASSWORD = os.getenv("PASSWORD")
 
             # Load webdriver with options
-            options = webdriver.ChromeOptions()
-            options.headless = True
-            options.add_argument("--log-level=3")
-            s=Service(executable_path=ChromeDriverManager().install())
-            driver = webdriver.Chrome(service=s,options=options)
+            try: # with chrome
+                options = webdriver.ChromeOptions()
+                options.add_argument("--headless=new")
+                options.add_argument("--log-level=3")
+                s=Service(executable_path=ChromeDriverManager().install())
+                driver = webdriver.Chrome(service=s,options=options)
+
+            except: # Else use Edge
+                options = webdriver.EdgeOptions()
+                options.add_argument("--headless=new")
+                driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()), options=options)
 
             # Open HRMS Page
             driver.get(URL)
