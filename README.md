@@ -11,10 +11,8 @@ Will auto-login to IITB DRF's HRMS portal and mark your attendance
 
 ## Prerequisites
 
-- Google Chrome Browser
+- Google Chrome & MS Edge
 - Python 3
-- Server with GUI (Windows/Linux)
-
 
 ## Deployment
 
@@ -23,9 +21,11 @@ To deploy this project, you need to install some modules first after fulfilling 
 Copy below commands in your terminal
 
 ```bash
-  pip3 install selenium
-  pip3 install webdriver-manager
-  pip3 install python-dotenv
+  sudo apt install python3-pip
+  
+  pip install selenium
+  pip install webdriver-manager
+  pip install python-dotenv
 ```
 
 Clone the project
